@@ -1,160 +1,158 @@
 var mouseX = 0, mouseY = 0,
 
-            windowHalfX = window.innerWidth / 2,
-            windowHalfY = window.innerHeight / 2,
+    windowHalfX = window.innerWidth / 2,
+    windowHalfY = window.innerHeight / 2,
 
-            SEPARATION = 200,
-            AMOUNTX = 1,
-            AMOUNTY = 1,
+    SEPARATION = 200,
+    AMOUNTX = 1,
+    AMOUNTY = 1,
 
-            camera, scene, renderer;
+    camera, scene, renderer;
 
-            init();
-            animate();
-
-
-
-            function init() {
+init();
+animate();
 
 
-                /*
-                 *   Define variables
-                 */
-                var container, separation = 1000, amountX = 50, amountY = 50, color = 0x77C0FD,
-                particles, particle;
-
-                container = document.getElementById("canvas");
+function init() {
 
 
-                camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 10000 );
-                camera.position.z = 100;
+    /*
+     *   Define variables
+     */
+    var container, separation = 1000, amountX = 50, amountY = 50, color = 0x77C0FD,
+        particles, particle;
 
-                scene = new THREE.Scene();
+    container = document.getElementById("canvas");
 
-                renderer = new THREE.CanvasRenderer({ alpha: true });
-                renderer.setPixelRatio( window.devicePixelRatio );
-                renderer.setClearColor( 0x000000, 0 );   // canvas background color
-                renderer.setSize( window.innerWidth, window.innerHeight );
-                container.appendChild( renderer.domElement );
 
-               
+    camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
+    camera.position.z = 100;
 
-                var PI2 = Math.PI * 2;
-                var material = new THREE.SpriteCanvasMaterial( {
+    scene = new THREE.Scene();
 
-                    color: color,
-                    opacity: 0.5,
-                    program: function ( context ) {
+    renderer = new THREE.CanvasRenderer({alpha: true});
+    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.setClearColor(0x000000, 0);   // canvas background color
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    container.appendChild(renderer.domElement);
 
-                        context.beginPath();
-                        context.arc( 0, 0, 0.5, 0, PI2, true );
-                        context.fill();
 
-                    }
+    var PI2 = Math.PI * 2;
+    var material = new THREE.SpriteCanvasMaterial({
 
-                } );
+        color: color,
+        opacity: 0.5,
+        program: function (context) {
 
-                var geometry = new THREE.Geometry();
+            context.beginPath();
+            context.arc(0, 0, 0.5, 0, PI2, true);
+            context.fill();
 
-                /*
-                 *   Number of particles
-                 */
-                for ( var i = 0; i < 150; i ++ ) {
+        }
 
-                    particle = new THREE.Sprite( material );
-                    particle.position.x = Math.random() * 2 - 1;
-                    particle.position.y = Math.random() * 2 - 1;
-                    particle.position.z = Math.random() * 2 - 1;
-                    particle.position.normalize();
-                    particle.position.multiplyScalar( Math.random() * 10 + 600 );
-                    particle.scale.x = particle.scale.y = 5;
+    });
 
-                    scene.add( particle );
+    var geometry = new THREE.Geometry();
 
-                    geometry.vertices.push( particle.position );
+    /*
+     *   Number of particles
+     */
+    for (var i = 0; i < 150; i++) {
 
-                }
+        particle = new THREE.Sprite(material);
+        particle.position.x = Math.random() * 2 - 1;
+        particle.position.y = Math.random() * 2 - 1;
+        particle.position.z = Math.random() * 2 - 1;
+        particle.position.normalize();
+        particle.position.multiplyScalar(Math.random() * 10 + 600);
+        particle.scale.x = particle.scale.y = 5;
 
-                /*
-                 *   Lines
-                 */
+        scene.add(particle);
 
-                var line = new THREE.Line( geometry, new THREE.LineBasicMaterial( { color: color, opacity: 0.2 } ) );
-                scene.add( line );
+        geometry.vertices.push(particle.position);
 
-                document.addEventListener( 'mousemove', onDocumentMouseMove, false );
-                document.addEventListener( 'touchstart', onDocumentTouchStart, false );
-                document.addEventListener( 'touchmove', onDocumentTouchMove, false );
+    }
 
-                //
+    /*
+     *   Lines
+     */
 
-                window.addEventListener( 'resize', onWindowResize, false );
+    var line = new THREE.Line(geometry, new THREE.LineBasicMaterial({color: color, opacity: 0.2}));
+    scene.add(line);
 
-            }
+    document.addEventListener('mousemove', onDocumentMouseMove, false);
+    document.addEventListener('touchstart', onDocumentTouchStart, false);
+    document.addEventListener('touchmove', onDocumentTouchMove, false);
 
-            function onWindowResize() {
+    //
 
-                windowHalfX = window.innerWidth / 2;
-                windowHalfY = window.innerHeight / 2;
+    window.addEventListener('resize', onWindowResize, false);
 
-                camera.aspect = window.innerWidth / window.innerHeight;
-                camera.updateProjectionMatrix();
+}
 
-                renderer.setSize( window.innerWidth, window.innerHeight );
+function onWindowResize() {
 
-            }
+    windowHalfX = window.innerWidth / 2;
+    windowHalfY = window.innerHeight / 2;
 
-            //
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
 
-            function onDocumentMouseMove(event) {
+    renderer.setSize(window.innerWidth, window.innerHeight);
 
-                mouseX = (event.clientX - windowHalfX) * 0.05;
-                mouseY = (event.clientY - windowHalfY) * 0.2;
+}
 
-            }
+//
 
-            function onDocumentTouchStart( event ) {
+function onDocumentMouseMove(event) {
 
-                if ( event.touches.length > 1 ) {
+    mouseX = (event.clientX - windowHalfX) * 0.05;
+    mouseY = (event.clientY - windowHalfY) * 0.2;
 
-                    event.preventDefault();
+}
 
-                    mouseX = (event.touches[ 0 ].pageX - windowHalfX) * 0.7;
-                    mouseY = (event.touches[ 0 ].pageY - windowHalfY) * 0.7;
+function onDocumentTouchStart(event) {
 
-                }
+    if (event.touches.length > 1) {
 
-            }
+        event.preventDefault();
 
-            function onDocumentTouchMove( event ) {
+        mouseX = (event.touches[0].pageX - windowHalfX) * 0.7;
+        mouseY = (event.touches[0].pageY - windowHalfY) * 0.7;
 
-                if ( event.touches.length == 1 ) {
+    }
 
-                    event.preventDefault();
+}
 
-                    mouseX = event.touches[ 0 ].pageX - windowHalfX;
-                    mouseY = event.touches[ 0 ].pageY - windowHalfY;
+function onDocumentTouchMove(event) {
 
-                }
+    if (event.touches.length == 1) {
 
-            }
+        event.preventDefault();
 
-            //
+        mouseX = event.touches[0].pageX - windowHalfX;
+        mouseY = event.touches[0].pageY - windowHalfY;
 
-            function animate() {
+    }
 
-                requestAnimationFrame( animate );
+}
 
-                render();
+//
 
-            }
+function animate() {
 
-            function render() {
+    requestAnimationFrame(animate);
 
-                camera.position.x += ( mouseX - camera.position.x ) * 0.1;
-                camera.position.y += ( - mouseY + 200 - camera.position.y ) * 0.05;
-                camera.lookAt( scene.position );
+    render();
 
-                renderer.render( scene, camera );
+}
 
-            }
+function render() {
+
+    camera.position.x += (mouseX - camera.position.x) * 0.1;
+    camera.position.y += (-mouseY + 200 - camera.position.y) * 0.05;
+    camera.lookAt(scene.position);
+
+    renderer.render(scene, camera);
+
+}
