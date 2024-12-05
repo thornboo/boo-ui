@@ -1,0 +1,15 @@
+[*.{js,jsx,mjs,cjs,ts,tsx,mts,cts,vue}]
+# 设置文件编码为UTF-8，确保所有文件使用统一的字符编码格式
+charset = utf-8
+
+# 设置缩进大小为4个空格
+indent_size = 4
+
+# 设置缩进风格为使用制表符，而不是使用空格（space）
+indent_style = tab
+
+# 设置文件结尾自动插入一个空行
+insert_final_newline = true
+
+# 设置自动去除行尾多余的空白字符
+trim_trailing_whitespace = true
