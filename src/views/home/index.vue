@@ -1,16 +1,19 @@
 <template>
-	<div style="display: flex; flex-direction: column">
-		<span>CSS样式案例</span>
+	<div style="display: flex">
+		<div style="display: flex; flex-direction: column">
+			<span>CSS样式案例</span>
 
-		<div>
-			<div
-				v-for="(item, index) in staticPage"
-				:key="index"
-				@click="jumpToStaticStyle(item.path)"
-			>
-				<button>{{ item.name }}</button>
+			<div>
+				<div
+					v-for="(item, index) in staticPage"
+					:key="index"
+					@click="jumpToStaticStyle(item.path)"
+				>
+					<button>{{ item.name }}</button>
+				</div>
 			</div>
 		</div>
+		<iframe class="iframe" src="./index.html"></iframe>
 	</div>
 </template>
 
@@ -43,4 +46,9 @@ function jumpToStaticStyle(path) {
 }
 </script>
 
-<style></style>
+<style scoped>
+.iframe {
+	height: 800px;
+	width: 400px;
+}
+</style>
