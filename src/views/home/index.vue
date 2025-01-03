@@ -1,54 +1,75 @@
 <template>
-	<div style="display: flex">
-		<div style="display: flex; flex-direction: column">
-			<span>CSS样式案例</span>
-
-			<div>
-				<div
-					v-for="(item, index) in staticPage"
-					:key="index"
-					@click="jumpToStaticStyle(item.path)"
-				>
-					<button>{{ item.name }}</button>
+	<div class="container">
+		<div class="navigation-bar">
+			<div class="navigation-title">boo-ui</div>
+			<div class="navigation-right-link">
+				<div><input placeholder="搜索文档" /></div>
+				<div>
+					<a href="https://github.com/">GitHub <span></span></a>
 				</div>
+				<div></div>
 			</div>
 		</div>
-		<iframe class="iframe" src="./index.html"></iframe>
+		<div class="content">
+			<div class="sidebar">
+				<div>
+					<span>基础</span>
+					<ul style="list-style: none">
+						<li>按钮</li>
+						<li>图标</li>
+						<li>排版</li>
+						<li>布局</li>
+					</ul>
+				</div>
+			</div>
+			<div class="body"></div>
+		</div>
 	</div>
 </template>
 
 <script setup>
-import router from '@/router'
+import menu from '@/menu'
 
-// 路由列表
-const staticPage = [
-	{
-		path: '../staticStyle/flashyText',
-		name: '闪光文字',
-	},
-	{
-		path: '../staticStyle/noCollisionLineLoading',
-		name: '无碰撞线加载',
-	},
-	{
-		path: '../staticStyle/stereoCarousel',
-		name: '立体轮播图',
-	},
-	{
-		path: '../staticStyle/raindropBackground',
-		name: '雨滴背景',
-	},
-]
-
-// 路由跳转
-function jumpToStaticStyle(path) {
-	router.push(path)
-}
+console.log(menu)
 </script>
 
-<style scoped>
-.iframe {
-	height: 800px;
-	width: 400px;
+<style lang="scss" scoped>
+.container {
+	.navigation-bar {
+		align-items: center;
+		background-color: #fff;
+		border-bottom: 1px solid #eaecef;
+		display: flex;
+		height: 50px;
+		justify-content: space-between;
+		width: 100%;
+
+		.navigation-title {
+			align-items: center;
+			display: flex;
+			padding-left: 20px;
+			width: 20%;
+		}
+
+		.navigation-right-link {
+			align-items: center;
+			display: flex;
+			gap: 10px;
+			justify-content: flex-end;
+			width: 70%;
+		}
+	}
+
+	.content {
+		display: flex;
+
+		.sidebar {
+			width: 20%;
+		}
+
+		.body {
+			width: 100%;
+		}
+	}
 }
 </style>
